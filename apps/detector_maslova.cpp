@@ -45,6 +45,7 @@ int main(int argc, char** argv)
 
     string detector_file = parser.get<string>("detector");
     CV_Assert(!detector_file.empty());
+	std::cout<<detector_file;
     string image_file = parser.get<string>("image");
     string video_file = parser.get<string>("video");
     bool use_camera = parser.get<bool>("camera");
@@ -57,7 +58,7 @@ int main(int argc, char** argv)
 		vector<Rect> objects;
 		CascadeClassifier cascade;
 		cascade.load(detector_file);
-		cascade.detectMultiScale(src, objects, 1.1, 3, 0, cv::Size() );
+		cascade.detectMultiScale(src, objects);
 		drawDetections(objects, Scalar(10,10,10), src);
 		imshow("image",src);
 		waitKey();
@@ -73,7 +74,7 @@ int main(int argc, char** argv)
 				vector<Rect> objects;
 				CascadeClassifier cascade;
 				cascade.load(detector_file);
-				cascade.detectMultiScale(src, objects, 1.1, 3, 0, cv::Size() );
+				cascade.detectMultiScale(src, objects);
 				drawDetections(objects, Scalar(0,0,0), src);
 				imshow("video",src);
 				waitKey();
@@ -92,14 +93,12 @@ int main(int argc, char** argv)
 			if (!cap.isOpened()) {std::cout<<"cap is not opened\n"; return 0;}
 			cap.read(src);
 			imshow("camera",src);
-			/*vector<Rect> objects;
+			vector<Rect> objects;
 			CascadeClassifier cascade;
 			cascade.load(detector_file);
-			cascade.detectMultiScale(src, objects, 1.1, 3, 0, cv::Size() );
+			cascade.detectMultiScale(src, objects);
 			drawDetections(objects, Scalar(0,0,0), src);
 			
-			std::cout<<"cap is opened\n";
-			*/
 			if(waitKey('q') >= 0) break;
 			
 		}
