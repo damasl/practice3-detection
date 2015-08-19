@@ -65,6 +65,8 @@ int main(int argc, char** argv)
     }
     else if (!video_file.empty())
     {
+		CascadeClassifier cascade;
+		cascade.load(detector_file);
         VideoCapture cap(video_file);
 		Mat src;
 		if (cap.isOpened())
@@ -72,12 +74,10 @@ int main(int argc, char** argv)
 		{
 			if (cap.read(src)){
 				vector<Rect> objects;
-				CascadeClassifier cascade;
-				cascade.load(detector_file);
 				cascade.detectMultiScale(src, objects);
-				drawDetections(objects, Scalar(0,0,0), src);
+				drawDetections(objects, red, src);
 				imshow("video",src);
-				waitKey();
+				waitKey(1);
 			}
 			else break;
 		}
