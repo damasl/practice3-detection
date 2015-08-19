@@ -24,8 +24,8 @@ base_name = splitext(base_name)[0]
 vec_file_path = base_name + ".vec"
 negatives_list_file = join(project_root_dir, "images", "negatives.txt")
 
-create_samples_call = '"{0}" -img "{1}" -bgthresh -1 -bg "{2}" -maxxangle 0.7 -maxyangle 0.7 -maxzangle 0.5 " \
-                      "-num 1000 -w {3} -h {4} -vec "{5}"'.format(join(opencv_bin_dir, create_samples_app),
+create_samples_call = '"{0}" -img "{1}" -bgthresh -1 -bg "{2}" -maxxangle 0.7 -maxyangle 0.7 -maxzangle 0.5 ' \
+                      '-num 1000 -w {3} -h {4} -vec "{5}"'.format(join(opencv_bin_dir, create_samples_app),
                                                                   args.image, negatives_list_file, args.width,
                                                                   args.height, vec_file_path)
 print("call: " + create_samples_call)
@@ -34,8 +34,8 @@ call(create_samples_call, shell=True)
 cascade_dir = base_name + "_cascade"
 if not isdir(cascade_dir):
     makedirs(cascade_dir)
-train_cascade_call = '"{0}" -vec "{1}" -numPos 500 -bg "{2}" -numNeg 500 -feature_type {3} -maxFalseAlarmRate 0.1 " \
-                     "-numStages 5 -w {4} -h {5} -data "{6}"'.format(join(opencv_bin_dir, train_cascade_app),
+train_cascade_call = '"{0}" -vec "{1}" -numPos 500 -bg "{2}" -numNeg 500 -featureType {3} -maxFalseAlarmRate 0.1 ' \
+                     '-numStages 5 -w {4} -h {5} -data "{6}"'.format(join(opencv_bin_dir, train_cascade_app),
                                                                      vec_file_path, negatives_list_file, args.features,
                                                                      args.width, args.height, cascade_dir)
 print("call: " + train_cascade_call)

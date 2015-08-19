@@ -58,8 +58,9 @@ int main(int argc, char** argv)
 		CascadeClassifier cascade;
 		cascade.load(detector_file);
 		cascade.detectMultiScale(src, objects, 1.1, 3, 0, cv::Size() );
-		drawDetections(objects, Scalar(0,0,0), src);
-
+		drawDetections(objects, Scalar(10,10,10), src);
+		imshow("image",src);
+		waitKey();
     }
     else if (!video_file.empty())
     {
@@ -74,6 +75,8 @@ int main(int argc, char** argv)
 				cascade.load(detector_file);
 				cascade.detectMultiScale(src, objects, 1.1, 3, 0, cv::Size() );
 				drawDetections(objects, Scalar(0,0,0), src);
+				imshow("video",src);
+				waitKey();
 			}
 			else break;
 		}
@@ -81,19 +84,27 @@ int main(int argc, char** argv)
     else if (use_camera)
     {
         VideoCapture cap(0);
+		//Нулевой кадр
 		Mat src;
+		cap.read(src);
 		for(;;)
 		{
-			cap>>src;
-			vector<Rect> objects;
+			if (!cap.isOpened()) {std::cout<<"cap is not opened\n"; return 0;}
+			cap.read(src);
+			imshow("camera",src);
+			/*vector<Rect> objects;
 			CascadeClassifier cascade;
 			cascade.load(detector_file);
 			cascade.detectMultiScale(src, objects, 1.1, 3, 0, cv::Size() );
 			drawDetections(objects, Scalar(0,0,0), src);
 			
-			if(waitKey(30) >= 0) break;
-
+			std::cout<<"cap is opened\n";
+			*/
+			if(waitKey('q') >= 0) break;
+			
 		}
+		
+
     }
     else
     {
