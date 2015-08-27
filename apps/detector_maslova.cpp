@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "opencv2/core/core.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/objdetect/objdetect.hpp"
 
@@ -21,8 +22,10 @@ void drawDetections(const vector<Rect>& detections,
                     const Scalar& color,
                     Mat& image)
 {
+    
     for (size_t i = 0; i < detections.size(); ++i)
     {
+        std::cout<<"1\n";
         rectangle(image, detections[i], color, 2);
     }
 }
@@ -55,6 +58,7 @@ int main(int argc, char** argv)
     if (!image_file.empty())
     {
 		Mat src = imread(image_file);
+        //resize(src,src, Size(100,100));
 		vector<Rect> objects;
 		CascadeClassifier cascade;
 		cascade.load(detector_file);
